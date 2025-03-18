@@ -23,32 +23,33 @@ public class Term implements ITerm {
     // =================
     @Override
     public int compareTo(ITerm that) {
-        return 0;
+        return this.term.compareTo(that.getTerm());
     }
 
     @Override
     public String toString() {
-        return null;
+        return weight + "   " + term;
     }
 
     @Override
     public long getWeight() {
-        return 0;
+        return weight;
     }
 
     @Override
     public String getTerm() {
-        return null;
+        return term;
     }
 
     @Override
     public void setWeight(long weight) {
-
+        this.weight = weight;
     }
 
     @Override
     public String setTerm(String term) {
-        return null;
+        this.term = term;
+        return term;
     }
 
 
