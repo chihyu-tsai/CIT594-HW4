@@ -14,9 +14,15 @@ public interface ITerm
      */
     public static Comparator<ITerm> byReverseWeightOrder()
     {
-        return null;
+        // implement this comparator
+        return new Comparator<ITerm>() {
+            @Override
+            public int compare(ITerm o1, ITerm o2) {
+                return (int) -(o1.getWeight() - o2.getWeight());
+            }
+        }
+        ;
     }
-
 
     /**
      * Compares the two terms in lexicographic order but using only the first r
@@ -27,7 +33,13 @@ public interface ITerm
      */
     public static Comparator<ITerm> byPrefixOrder(int r)
     {
-        return null;
+        return new Comparator<ITerm>() {
+            @Override
+            public int compare(ITerm o1, ITerm o2) {
+                return o1.getTerm().substring(0, r).compareTo(o2.getTerm().substring(0, r));
+            }
+        }
+        ;
     }
 
     // Compares the two terms in lexicographic order by query.

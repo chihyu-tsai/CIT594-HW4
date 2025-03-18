@@ -1,11 +1,20 @@
 public class Term implements ITerm {
 
     // TODO: instance variables
+    // add in field
+    private String term;
+    private long weight;
 
     /**
      * Initialize a Term with a given query String and weight
      */
     public Term(String term, long weight) {
+        // finish the constructor
+        if (term == null || weight < 0) {
+            throw new IllegalArgumentException();
+        }
+        this.term = term;
+        this.weight = weight;
 
     }
 
