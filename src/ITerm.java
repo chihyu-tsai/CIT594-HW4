@@ -33,6 +33,7 @@ public interface ITerm
      */
     public static Comparator<ITerm> byPrefixOrder(int r)
     {
+        if (r < 0) {throw new IllegalArgumentException();}
         return new Comparator<ITerm>() {
             @Override
             public int compare(ITerm o1, ITerm o2) {
