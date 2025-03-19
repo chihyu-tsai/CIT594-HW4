@@ -15,6 +15,9 @@ public class Node {
      */
     public Node() {
         // TODO!
+        this.term = new Term("", 0);
+        this.references = new Node[26];
+
     }
 
     /**
@@ -22,7 +25,11 @@ public class Node {
      * @throws IllegalArgumentException if query is null or if weight is negative.
      */
     public Node (String query, long weight) {
-
+        if (query == null || weight < 0) {
+            throw new IllegalArgumentException();
+        }
+        this.term = new Term(query, weight);
+        this.references = new Node[26];
     }
 
     public Term getTerm() {
