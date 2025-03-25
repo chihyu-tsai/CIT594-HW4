@@ -1,0 +1,11 @@
+10
+       2194440	creature
+       1968270	family
+       43	politics
+       22	poll
+       21	pollution
+       1458070	army
+       1457530	ache
+       1457130	auction
+       1382380	brand
+       1244030	auntie
