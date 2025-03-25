@@ -28,7 +28,7 @@ public class Term implements ITerm {
 
     @Override
     public String toString() {
-        return weight + "   " + term;
+        return weight + "\t" + term;
     }
 
     @Override
