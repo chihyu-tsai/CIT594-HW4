@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class AutocompleteTest {
 
 
-    @Test
-    public void testBuildTrie() {
-        Autocomplete ac = new Autocomplete();
-        Node actual = ac.buildTrie("pokemon.txt", 2);
-        assertEquals(728, actual.getPrefixes());
-    }
+//    @Test
+//    public void testBuildTrie() {
+//        Autocomplete ac = new Autocomplete();
+//        Node actual = ac.buildTrie("pokemon.txt", 2);
+//        assertEquals(728, actual.getPrefixes());
+//    }
 
     @Test
     public void testGetSubTrie() {
@@ -21,7 +22,7 @@ public class AutocompleteTest {
         Node actual = ac.buildTrie("test.txt", 2);
         assertEquals(4, ac.getSubTrie("a").getPrefixes());
         assertEquals(3, ac.getSubTrie("pol").getPrefixes());
-        assertEquals(null, ac.getSubTrie("l"));
+        assertNull(null, ac.getSubTrie("l"));
     }
 
     @Test

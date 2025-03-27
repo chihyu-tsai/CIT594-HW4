@@ -1,6 +1,5 @@
 public class Term implements ITerm {
 
-    // TODO: instance variables
     // add in field
     private String term;
     private long weight;
@@ -19,7 +18,6 @@ public class Term implements ITerm {
     }
 
     // =================
-    // TODO: Overrides!
     // =================
     @Override
     public int compareTo(ITerm that) {

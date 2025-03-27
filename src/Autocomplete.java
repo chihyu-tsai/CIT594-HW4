@@ -7,7 +7,6 @@ import java.util.List;
 public class Autocomplete implements IAutocomplete {
 
     private Node root = new Node();
-    private List<ITerm> suggestions = new ArrayList<>();
 
 
     @Override
@@ -31,6 +30,8 @@ public class Autocomplete implements IAutocomplete {
         }
         // assign curr - initially start at root
         Node curr = root;
+        root.setPrefixes(root.getPrefixes() + 1);
+
         for (int i = 0 ; i < word.length(); i++) {
             Node[] currReference = curr.getReferences();
             int index = word.charAt(i) - 'a';
@@ -56,7 +57,7 @@ public class Autocomplete implements IAutocomplete {
             FileReader fr = new FileReader(filename);
             BufferedReader br = new BufferedReader(fr);
             // to get rid of the first line in the .txt file where there's just a number
-            root.setPrefixes(Integer.parseInt(br.readLine()));
+//            root.setPrefixes(Integer.parseInt(br.readLine()));
             // start reading the content in the file
             String read = br.readLine();
             while (read != null) {
@@ -64,7 +65,7 @@ public class Autocomplete implements IAutocomplete {
                 message = message.trim();
                 String[] msgList = message.split("\t");
                 while (msgList.length > 1) {
-                    addWord(msgList[1], Integer.parseInt(msgList[0]));
+                    addWord(msgList[1], Long.parseLong(msgList[0]));
                     break;
                 }
                 read = br.readLine();
@@ -81,6 +82,9 @@ public class Autocomplete implements IAutocomplete {
         for (int i = 0; i < prefix.length(); i++) {
             // prefix[i] is the actual character we get
             int index = prefix.charAt(i) - 'a';
+            if (index < 0) {
+                return null;
+            }
             // check if the current character is in the trie
             if (curr.getReferences()[index] != null) {
                 curr = curr.getReferences()[index];
@@ -95,6 +99,9 @@ public class Autocomplete implements IAutocomplete {
     public int countPrefixes(String prefix) {
         // calling getSubTrie to move the target node
         Node result = getSubTrie(prefix);
+        if (result == null) {
+            return 0;
+        }
         int num = result.getPrefixes();
         return num;
     }
@@ -103,24 +110,28 @@ public class Autocomplete implements IAutocomplete {
     public List<ITerm> getSuggestions(String prefix) {
         /* calling getSubTrie to move the target node
         we want to now treat the subtrie's node as the root and return all potential words */
+        List<ITerm> suggestions = new ArrayList<>();
         Node start = getSubTrie(prefix);
+        if (start == null) {
+            return suggestions;
+        }
         // call the recursive function on this starting node
-        traverse(start);
+        traverse(start, suggestions);
         return suggestions;
     }
 
-    public void traverse(Node node) {
+    public void traverse(Node node, List list) {
         // this means we hit the leaf node
-        if (node.getTerm().getWeight() != 0) {
-            Node copy = new Node(node.getTerm().getTerm(),node.getTerm().getWeight());
-            ITerm copyTerm = copy.getTerm();
-            suggestions.add(copyTerm);
+        if (node.getWords() == 1) {
+//            Node copy = new Node(node.getTerm().getTerm(),node.getTerm().getWeight());
+            ITerm copyTerm = new Term(node.getTerm().getTerm(), node.getTerm().getWeight());
+            list.add(copyTerm);
         }
         for (int i = 0; i < node.getReferences().length; i++) {
             if (node.getReferences()[i] == null  || node.getReferences()[i].getPrefixes() == 0) {
                 continue;
             }
-            traverse(node.getReferences()[i]);
+            traverse(node.getReferences()[i], list);
         }
     }
 
